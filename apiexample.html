@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Hello this is the place of heaven : </h3>
+    <div id="rooms-container">
+
+    </div>
+
+
+
+</body>
+<script>
+    let roomsContainer = document.getElementById('rooms-container')
+
+    let getRooms = async () => {
+
+        let response = await fetch('http://127.0.0.1:8000/api/rooms/')
+        let rooms = await response.json()
+        
+        for(let i=0; rooms.length > 1; i++){
+            let room = rooms[i]
+            // so the backlite are also known as the template tag 
+            let row = `
+                    <div>
+                    <p> ${room.name} </p>
+                    </div>
+                    `
+           roomsContainer.innerHTML +=row
+        }
+        
+        }
+        getRooms()
+        
+
+
+
+
+
+
+</script>
+</html>

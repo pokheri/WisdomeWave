@@ -1,0 +1,7 @@
+this is the django rest framework , in which we are converting our dat into json formate so the other developoers can used it :
+
+pip install djangorest_framework
+
+and then the djangorestframework response , for responsing data and request object too
+
+
