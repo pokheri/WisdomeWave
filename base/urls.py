@@ -21,6 +21,10 @@ urlpatterns = [
     path('browse-topics/', views.browseTopics, name='browse-topics'),
     path('recent-activity/', views.recentActivity, name='recent-activity'),
 
+
+    # path('user-profile/<int:pk>/', views.userProfile, name = 'userprofile'),
+
+
     
     
 

@@ -13,6 +13,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from base.models import Message
 
+from .models import Profile
+from .form import ProfileForm
+
+
+
 
 
 from base.form import MessageForm
@@ -57,7 +62,14 @@ def registerPage(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
+            # we just create this not saving at all : 
+
+          
+
+
+            
             user.save()
+            profile = Profile.objects.create(user = user )
             # automatically login the user , in the website : 
             login(request, user)
             return redirect('home')
@@ -138,11 +150,14 @@ def room(request, pk ):
 def userProfile(request,pk):
     user = User.objects.get(pk = int(pk))
 
-
+    
     # message =Message.objects.filter(user = user )
     message  = user.message_set.all()
-    topics = Topic.objects.all()
+    # topics = Topic.objects.filter(room__host = user )[0:5]
     room_count = Room.objects.filter(host = user).count()
+    
+    topics = set(Topic.objects.filter(room__host = user)    )
+
     print('the value of the count',room_count)
 
     q  = request.GET.get('q') if request.GET.get('q') else ''
@@ -172,16 +187,37 @@ def userProfile(request,pk):
     return render(request, 'base/profile.html', context )
 
 
+
 @login_required
 def updateUser(request ):
     user = request.user
-    form = UserForm(instance=user)
+    
+    
+
+    userform = UserForm(instance=user)
+    profile = ProfileForm(instance=user.profile)
+
+
+
 
     if request.method == "POST":
-        form  = UserForm(request.POST, instance=user)
-        if form.is_valid():
-          
-            user.save()
+        userform = UserForm(request.POST, instance=user)
+        profileform = ProfileForm(request.POST, request.FILES)
+
+        if userform.is_valid() and profileform.is_valid():
+            # you have to check here : 
+            ok = userform.save(commit=False)
+            ok.username = userform.cleaned_data['username'].lower()
+        
+            ok.save()
+            profile, created  = Profile.objects.get_or_create(user = request.user)
+            profile.user = request.user
+            profile.image = profileform.cleaned_data['image']
+            profile.bio = profileform.cleaned_data['bio']
+
+
+            profile.save()
+            print('ave it ')
 
             return redirect('user-profile', user.id)
         else: 
@@ -190,7 +226,9 @@ def updateUser(request ):
     
 
     context ={
-        'form': form, 
+        'userform': userform, 
+        'profileform':profile,
+
 
         
     }
@@ -324,3 +362,5 @@ def recentActivity(request):
     }
     
     return render(request, 'base/activity.html', context )
+
+

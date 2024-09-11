@@ -2,7 +2,6 @@ from django.contrib import admin
 
 # Register your models here.
 from base.models import Room, Topic, Message
-
 @admin.register(Room)
 class RoomAdminModel(admin.ModelAdmin):
     list_display  = ['name', 'description','created', 'updated']
@@ -23,4 +22,6 @@ class MessageAdmin(admin.ModelAdmin):
     list_display  = ['body', 'room', 'user']
 
 
-    
+from .models import Profile
+admin.site.register(Profile)
+

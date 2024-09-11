@@ -30,10 +30,10 @@
 
           <div class="settings layout__body">
            
-            <form class="form" method="post">
+            <form class="form" enctype="multipart/form-data" method="post">
 
               {% csrf_token %}
-              {% for field in form %}
+              <!-- {% for field in form %}
 
               <div class="form__group">
                 <label >{{field.label}}</label>
@@ -42,6 +42,28 @@
                 </div>
                 {% endfor %}
                 
+                -->
+
+                {% for  field in userform %}
+                      
+              <div class="form__group">
+                    <label >{{field.label}}</label>
+                          {{field}}
+
+                </div>
+
+                {% endfor %}
+          
+                {% for field in profileform %}
+                <div class="form__group">
+                  <label >{{field.label}}</label>
+                        {{field}}
+
+              </div>
+               
+
+                  {% endfor %}
+
               <div class="form__action">
                 <a class="btn btn--dark" href="{% url 'user-profile' user.id %}">Cancel</a>
                 <button class="btn btn--main" type="submit">Update Settings</button>

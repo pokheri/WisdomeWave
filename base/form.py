@@ -1,7 +1,8 @@
 from django.forms import ModelForm
 from django import forms
-from base.models import Room, Message
+from base.models import Room, Message, Profile
 from django.contrib.auth.models import User
+
 
 class RoomFrom(ModelForm):
 
@@ -24,7 +25,20 @@ class MessageForm(ModelForm):
 
 class UserForm(ModelForm):
     
+
  
     class Meta:
         model = User
         fields = ['username', 'email' ]
+
+
+
+class ProfileForm(ModelForm):
+
+    class Meta:
+        model = Profile 
+        fields = '__all__'
+        exclude = ['user']
+
+
+

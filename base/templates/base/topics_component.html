@@ -11,11 +11,12 @@
       {% for topic in topics %}
       {% if next == 'profile' %}
       <li>
-        <a href="{% url 'user-profile' user.id  %}?q={{topic.name}}">{{topic.name}}  <span>{{topic.room_set.all.count}}</span> </a>
+        <a href="{% url 'user-profile' user.id  %}?q={{topic.name}}">{{topic.name}} <!-- <span>{{topic.room_set}}</span>   --> </a>
       </li>
       {% else %}
       <li>
-        <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}  <span>{{ topic.room_set.all.count }}</span> </a>
+   
+         <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}  <span>{{ topic.room_set.all.count }}</span> </a>
         
       </li>
       {% endif %}

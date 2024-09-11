@@ -37,9 +37,16 @@
                 <a href="{% url 'home'  %}">All  <span>{{room_count}}</span></a>
               </li>
               {% for topic in topics %}
+              {% if  next == 'profile' %}
+                <li>
+                  <a href="{% url 'user_profile' topic.room.host.id   %}?q={{topic.name}}">{{topic.name}} <span>{{topic.room_set.all.count}}</span></a>
+                </li>
+              {% else %}
+
               <li>
                 <a href="{% url 'home'  %}?q={{topic.name}}">{{topic.name}} <span>{{topic.room_set.all.count}}</span></a>
               </li>
+              {% endif %}
               {% endfor %}
 
 

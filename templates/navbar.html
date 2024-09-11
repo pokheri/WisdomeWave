@@ -27,10 +27,14 @@
         <div class="header__user">
           <a href="{% url 'user-profile' request.user.id %}">
             <div class="avatar avatar--medium active">
+              {% if user.profile.image %}
+              <img src="{{user.profile.image.url}}" alt="Hello">
+              {% else %}
               <img src="{% static 'images/my.jpg' %}" />
+              {% endif %}
             </div>
             
-            <p>{{request.user.username}} <span>@{{request.user.email}}</span></p>.
+            <p>{{request.user.username}} <span>@{{request.user.username}}</span></p>.
             
 
           </a>
